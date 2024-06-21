@@ -2,10 +2,13 @@
 
 import { getAuthor, getPosts } from "@/sanity/sanity.query";
 import { useEffect, useState } from "react";
+import { useNextSanityImage } from 'next-sanity-image';
+import client from "@/sanity/sanity.client";
 
 export default function Home() {
   const [postData, setPostData] = useState([]);
   const [authorData, setAuthorData] = useState([]);
+  const imageProps = useNextSanityImage(client, postData[0]?.mainImage);
 
   useEffect(() => {
     (async () => {
@@ -15,6 +18,7 @@ export default function Home() {
       setAuthorData(author);
     })()
   }, []);
+  console.log(imageProps)
 
   console.log('post......', postData)
   console.log('authorData......', authorData)
@@ -29,7 +33,9 @@ export default function Home() {
             </h1>
           </>)
         })
-      }</h1>
+      }
+      <img src={imageProps?.src} height={10} width={500} />
+      </h1>
     </>
   );
 }
