@@ -1,41 +1,43 @@
 'use client'
 
-import { getAuthor, getPosts } from "@/sanity/sanity.query";
-import { useEffect, useState } from "react";
-import { useNextSanityImage } from 'next-sanity-image';
+import Footer from "@/components/Footer/Footer";
+import Header from "@/components/Header/Header";
+import PortfolioSec from "@/components/PortfolioSec/PortfolioSec";
 import client from "@/sanity/sanity.client";
+import { getBacImages, getMenus, getSkillCards } from "@/sanity/sanity.query";
+import type { BacImages, Menu, SkillCard } from "@/types/Type";
+import { useNextSanityImage } from "next-sanity-image";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [postData, setPostData] = useState([]);
-  const [authorData, setAuthorData] = useState([]);
-  const imageProps = useNextSanityImage(client, postData[0]?.mainImage);
+  const [bacImages, setBacImages] = useState<BacImages[]>([]);
+  const [menus, setMenus] = useState<Menu[]>([]);
+  const [skillCards, setSkillCards] = useState<SkillCard[]>([]);
 
   useEffect(() => {
     (async () => {
-      const data = await getPosts();
-      const author = await getAuthor()
-      setPostData(data);
-      setAuthorData(author);
-    })()
+      const bacImages = await getBacImages();
+      const menus = await getMenus();
+      const skillCards = await getSkillCards();
+      setBacImages(bacImages);
+      setMenus(menus);
+      setSkillCards(skillCards);
+    })();
   }, []);
-  console.log(imageProps)
-
-  console.log('post......', postData)
-  console.log('authorData......', authorData)
-
+  const img = useNextSanityImage(client, bacImages[0]?.images[0]);
   return (
     <>
-      <h1>{
-        postData && postData.map((res: { title: string }) => {
-          return (<>
-            <h1 className="m-7">
-              {res?.title}
-            </h1>
-          </>)
-        })
-      }
-      <img src={imageProps?.src} height={10} width={500} />
-      </h1>
+      <Image
+        src={img?.src}
+        alt="img"
+        width={300}
+        height={300}
+        loading="lazy"
+      />
+      <Header />
+      <PortfolioSec />
+      <Footer />
     </>
   );
 }
