@@ -14,9 +14,9 @@ const HomeSlider = () => {
                     </li>
                 </div>
 
-                <div className="logo">
+                {/* <div className="logo">
                     <img src='public/img/logoxl.gif' />
-                </div>
+                </div> */}
             </div>
         </>
     )

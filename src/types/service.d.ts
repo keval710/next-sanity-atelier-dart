@@ -6,7 +6,16 @@ export interface DBResponse {
     email: string,
     password: string,
     role: string,
+    isVerified: boolean,
     createdAt: Date,
     updatedAt: Date,
     __V: number
 }
+
+export interface Error {
+    error: {
+        message: string
+    }
+}
+
+export type VerificationResult = string | Error;

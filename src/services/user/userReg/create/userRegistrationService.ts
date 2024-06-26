@@ -3,39 +3,51 @@ import { NextRequest } from "next/server";
 import { z } from "zod";
 import { userValidation } from "../../../user/userReg";
 import bcrypt from 'bcryptjs';
+import { isErrorResult } from "@/helpers/errorHandler";
+import { genToken } from "@/helpers/token";
+import { emailVerification } from "@/helpers/mail";
 
 export const userRegistrationService = async (req: NextRequest) => {
     try {
         const inputData = await req.json();
         const validationResult = userValidation.safeParse(inputData);
-        if (validationResult.success) {
-            const { data } = validationResult;
-            const emailExist = await User.findOne({ email: data.email })
-            if (emailExist) {
-                return { error: { message: 'Email Already Exist', path: 'email' } }
-            } else {
-                const hashedPass = data.password && await bcrypt.hash(data.password, 12);
-                const user = hashedPass && new User({
-                    name: data.name,
-                    email: data.email,
-                    password: hashedPass,
-                    role: 'user'
-                });
-                if (user) {
-                    const savedUser = await user.save();
-                    return savedUser && { message: 'user reg Successfully', savedUser };
-                } else {
-                    throw new Error();
-                }
-            }
-        } else {
-            const valErrors = (validationResult as z.SafeParseError<typeof req>).error.issues.map((issue) => ({
+        // Handle validation errors
+        if (!validationResult.success) {
+            const validationErrors = (validationResult as z.SafeParseError<typeof req>).error.issues.map((issue) => ({
                 message: issue.message,
                 path: issue.path.join('.'),
             }));
-            return valErrors;
+            return { error: { message: 'Validation failed', details: validationErrors }, status: 422 };
         }
+
+        const { data } = validationResult;
+        // Check if the email already exists in the database
+        const emailExist = await User.findOne({ email: data.email });
+        if (emailExist) {
+            return { error: { message: 'Email already exists', path: 'email' }, status: 422 };
+        }
+        // Hash the password
+        const hashedPass = await bcrypt.hash(data.password, 12);
+        // Create a new user
+        const newUser = new User({
+            name: data.name,
+            email: data.email,
+            password: hashedPass
+        });
+        // Save the new user to the database
+        const savedUser = newUser && await newUser.save();
+        const tokenResult = await genToken({ _id: savedUser._id.toString() });
+        if (isErrorResult(tokenResult)) {
+            return { error: { message: tokenResult.error.message, path: 'token' }, status: 422 };
+        }
+        emailVerification(savedUser.email, tokenResult, savedUser.name);
+        return {
+            message: 'User registered successfully',
+            user: savedUser,
+            token: tokenResult,
+            status: 201
+        };
     } catch (error: any) {
-        throw new Error(error)
+        return { error: { message: error.message || 'An unexpected error occurred during registration' } };
     }
 }

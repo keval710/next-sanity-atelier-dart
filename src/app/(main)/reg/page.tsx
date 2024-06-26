@@ -1,34 +1,48 @@
 'use client';
 
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { BiShowAlt } from 'react-icons/bi';
 import { GrFormViewHide } from 'react-icons/gr';
 import { regUser } from './action';
 import FormLoader from '@/components/Loaders/FormLoader';
+import { isAuthenticated } from '@/app/lib/Auth';
+import { useRouter } from 'next/navigation'
+import { emailVerification } from '@/helpers/mail';
 
 const Reg = () => {
+    const router = useRouter();
+    useEffect(() => {
+        (async () => {
+            const res = await isAuthenticated();
+            if (res) {
+                router.push('/');
+            }
+        })()
+    }, []);
     const [showPassword, setShowPassword] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { register, handleSubmit, formState: { errors }, reset, setError } = useForm();
 
     const togglePasswordVisibility = () => setShowPassword(prevShowPassword => !prevShowPassword);
-
     const onSubmit = async (data) => {
         setIsSubmitting(true);
         try {
-            const { error } = await regUser(data);
-            if (error && error.path === 'email') {
-                setError('email', {
-                    type: 'manual',
-                    message: 'Email already exists'
-                });
+            const result = await regUser(data);
+            if (result.error) {
+                if (result.error.status === 422 && result.error.message.includes('Email already exists')) {
+                    setError('email', {
+                        type: 'manual',
+                        message: 'Email already exists'
+                    });
+                }
             } else {
                 reset();
+                router.push('/login');
             }
         } catch (error) {
-            console.error('An error occurred:', error);
+            console.error('An unexpected error occurred:', error);
         } finally {
             setIsSubmitting(false);
         }

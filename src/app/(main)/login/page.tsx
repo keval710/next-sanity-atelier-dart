@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { BiShowAlt } from 'react-icons/bi';
@@ -8,41 +8,57 @@ import { GrFormViewHide } from 'react-icons/gr';
 import { loginUser } from './action';
 import FormLoader from '@/components/Loaders/FormLoader';
 import { useRouter } from 'next/navigation'
+import { isAuthenticated } from '@/app/lib/Auth';
 
 const Login = () => {
     const router = useRouter();
+    useEffect(() => {
+        (async () => {
+            const res = await isAuthenticated();
+            if (res) {
+                router.push('/');
+            }
+        })()
+    }, []);
     const [showPassword, setShowPassword] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { register, handleSubmit, formState: { errors }, setError, reset } = useForm();
-    // Toggle password visibility
+
     const togglePasswordVisibility = () => setShowPassword(prevShowPassword => !prevShowPassword);
-    // Handle form submission
     const onSubmit = async (data) => {
         setIsSubmitting(true);
         try {
-            const { error, token } = await loginUser(data);
-            if (error) {
-                switch (error.path) {
-                    case 'email':
-                        setError('email', {
-                            type: 'manual',
-                            message: 'Email not exist'
-                        });
-                        break;
-                    case 'password':
-                        setError('password', {
-                            type: 'manual',
-                            message: 'Enter valid password'
-                        });
-                        break;
+            const result = await loginUser(data);
+            if (result.error) {
+                if (result.error.status === 422) {
+                    switch (result.error.path) {
+                        case 'email':
+                            setError('email', {
+                                type: 'manual',
+                                message: 'Email does not exist'
+                            });
+                            break;
+                        case 'password':
+                            setError('password', {
+                                type: 'manual',
+                                message: 'Invalid password'
+                            });
+                            break;
+                        default:
+                            console.error('Validation error:', result.error.message);
+                    }
+                } else {
+                    console.error('Login error:', result.error.message);
                 }
             } else {
-                token && window.localStorage.setItem('token', token)
-                router.push('/');
-                reset();
+                if (result.token) {
+                    window.localStorage.setItem('token', result.token);
+                    router.push('/');
+                    reset();
+                }
             }
         } catch (error) {
-            console.error('An error occurred:', error);
+            console.error('An unexpected error occurred:', error);
         } finally {
             setIsSubmitting(false);
         }
