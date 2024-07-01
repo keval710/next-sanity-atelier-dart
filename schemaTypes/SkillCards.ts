@@ -29,12 +29,12 @@ export default {
                     },
                     {
                         name: 'size',
-                        title: 'Size',
+                        title: 'Size (px)',
                         type: 'number',
                     },
                     {
                         name: 'textSize',
-                        title: 'Text Size',
+                        title: 'Text Size (px)',
                         type: 'number'
                     },
                     {

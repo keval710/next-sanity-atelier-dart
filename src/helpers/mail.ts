@@ -43,7 +43,6 @@ export const emailVerification = (email: string, token: string, name: string) =>
                     padding-bottom: 20px;
                     border-bottom: 1px solid #eeeeee;
                 }
-        
                 .email-header img {
                     max-width: 150px;
                 }
@@ -64,7 +63,7 @@ export const emailVerification = (email: string, token: string, name: string) =>
                     margin: 20px auto;
                     padding: 15px;
                     background-color: #007BFF;
-                    color: #ffffff;
+                    color: white !important; /* Ensure the text color is white */
                     text-align: center;
                     text-decoration: none;
                     border-radius: 5px;
@@ -82,7 +81,6 @@ export const emailVerification = (email: string, token: string, name: string) =>
                 }
             </style>
         </head>
-        
         <body>
             <div class="email-container">
                 <div class="email-header">
@@ -91,7 +89,12 @@ export const emailVerification = (email: string, token: string, name: string) =>
                 <div class="email-body">
                     <h1>Hello, ${name}!</h1>
                     <p>Thank you for signing up with us. Please confirm your email address by clicking the button below:</p>
-                    <a href='http://localhost:3000/reg/emailVerification/${token}' class="email-button">Verify Email Address</a>
+                    <a 
+                    href='http://localhost:3000/reg/emailVerification/${token}' 
+                    class="email-button" 
+                    target="_blank" 
+                    style="color: white; text-decoration: none;"
+                    >Verify Email Address</a>
                     <p>If you did not create an account with us, please ignore this email.</p>
                 </div>
                 <div class="email-footer">
@@ -101,7 +104,6 @@ export const emailVerification = (email: string, token: string, name: string) =>
                 </div>
             </div>
         </body>
-        
         </html>
         `,
     };

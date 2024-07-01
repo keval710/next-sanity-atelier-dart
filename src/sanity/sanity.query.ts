@@ -9,7 +9,7 @@ export async function getBacImages() {
                 images
             }`
         );
-        return images;
+        return images.length ? images[0].images : []
     } catch (error) {
         console.error("Error fetching images from Sanity:", error);
         return [];

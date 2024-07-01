@@ -1,6 +1,6 @@
 export const isAuthenticated = async () => {
     try {
-        const token = window.localStorage.getItem('token');
+        const token = window.localStorage.getItem('atelier-dart-userToken');
         if (!token) {
             return null;
         }
@@ -9,7 +9,7 @@ export const isAuthenticated = async () => {
         if (!response.ok) {
             // if user not available in db but token is store in localStorage
             if (data.error.message.includes('User not found')) {
-                window.localStorage.removeItem('token');
+                window.localStorage.removeItem('atelier-dart-userToken');
             } else {
                 throw new Error('Failed to fetch user role');
             }

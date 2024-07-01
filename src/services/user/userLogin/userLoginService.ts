@@ -20,12 +20,15 @@ export const userLoginService = async (req: NextRequest) => {
                 }));
             return { error: { message: 'Validation errors occurred', details: validationErrors }, status: 422 };
         }
-
         const { data } = validationResult;
         // Check if the user exists in the database
         const isEmailExist: DBResponse | null = await User.findOne({ email: data.email });
         if (!isEmailExist) {
-            return { error: { message: 'User not found', path: 'email' }, status: 422 };
+            return { error: { message: 'User not found! Please Register First', path: 'email' }, status: 422 };
+        }
+        // Check if the email is verified
+        if (!isEmailExist.isVerified) {
+            return { error: { message: 'Email not verified', path: 'email' }, status: 422 }
         }
         // Verify the password
         const isPassMatch = await bcrypt.compare(data.password, isEmailExist.password);

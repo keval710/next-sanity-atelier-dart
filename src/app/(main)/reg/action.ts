@@ -1,4 +1,6 @@
-export async function regUser(payload: { name: string; email: string; password: string }) {
+import { FormData } from "@/types/Type";
+
+export async function regUser(payload: FormData) {
     try {
         const response = await fetch('/api/user/reg', {
             method: 'POST',

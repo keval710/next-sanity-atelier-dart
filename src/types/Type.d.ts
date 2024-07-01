@@ -17,7 +17,7 @@ export interface BacImages {
     _updatedAt: string
 }
 
-interface Menus {
+export interface Menus {
     menuName: string,
     menuUrl: string,
     _key: string
@@ -55,4 +55,10 @@ export interface SkillCard {
     _rev: string,
     _type: string,
     _updatedAt: string
+}
+
+export type FormData = {
+    email: string;
+    password: string;
+    name?: string
 }

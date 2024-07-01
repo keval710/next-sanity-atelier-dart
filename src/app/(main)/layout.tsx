@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: "Next App",
@@ -16,12 +14,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body style={{
-        backgroundRepeat: "no-repeat",
-        background: `url(http://atelierdart.de/_include/img/slider-images/image01.jpg)`,
-        backgroundSize: "cover",
-        backgroundAttachment: "fixed",
-      }}>
+      <body>
+        <Toaster position="top-right" />
         {children}
       </body>
     </html>
