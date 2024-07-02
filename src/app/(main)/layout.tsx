@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
+import { SanityProvider } from "@/context/SanityContext";
+import { UserProvider } from "@/context/UserContext";
 
 export const metadata: Metadata = {
   title: "Next App",
@@ -15,8 +17,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Toaster position="top-right" />
-        {children}
+        <UserProvider>
+          <SanityProvider>
+            <Toaster position="top-right" />
+            {children}
+          </SanityProvider>
+        </UserProvider>
       </body>
     </html>
   );

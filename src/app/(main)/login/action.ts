@@ -18,7 +18,7 @@ export async function loginUser(payload: { email: string; password: string }) {
                 }
             };
         }
-        return { token: data.token };
+        return { token: data.token, user: data.user };
     } catch (error: any) {
         console.error('Login failed:', error);
         return { error: { message: error.message || 'Network error occurred' } };

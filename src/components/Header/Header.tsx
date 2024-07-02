@@ -2,13 +2,11 @@
 
 import React, { useState } from 'react'
 import HomeSlider from '../HomeSlider/HomeSlider';
-import { Menus } from '@/types/Type';
+import { BacImages, Images, Menus } from '@/types/Type';
 
 interface Props {
-    menus: {
-        title: string;
-        menu: Menus[]
-    }[];
+    menus:  Menus[] | null;
+    bacImages: Images[]
 }
 
 const Header: React.FC<Props> = ({ menus }) => {
@@ -29,7 +27,7 @@ const Header: React.FC<Props> = ({ menus }) => {
                                     <ul className="p-0 m-0">
                                         <li>
                                             {
-                                                menus.menu && menus.menu.map((menu) => (
+                                                menus && menus.map((menu) => (
                                                     <a key={menu._key}
                                                         onClick={() => { }}
                                                         data-option-value="*"
@@ -47,7 +45,7 @@ const Header: React.FC<Props> = ({ menus }) => {
                     </nav>
                     {/* Mobile menu button */}
                     <button
-                        className="absolute left-0 -top-10 text-white focus:outline-none focus:text-white md:hidden"
+                        className="sticky left-3 -ml-48 -mt-48 text-white focus:outline-none focus:text-white md:hidden z-50"
                         onClick={toggleMobileMenu}
                     >
                         <svg
@@ -66,12 +64,12 @@ const Header: React.FC<Props> = ({ menus }) => {
                         </svg>
                     </button>
                     {/* Mobile menu */}
-                    <div className={`md:hidden ${isMobileMenuOpen ? "" : "hidden"}`}>
+                    <div className={`md:hidden p-3 ${isMobileMenuOpen ? "" : "hidden"}`}>
                         <div className="option-set" data-option-key="filter" id="navbar-default">
                             <ul className="p-0 m-0">
                                 <li>
                                     {
-                                        menus.menu && menus.menu.map((menu) => (
+                                        menus && menus.map((menu) => (
                                             <a key={menu._key}
                                                 data-option-value="*"
                                                 className="selected cursor-pointer hover:text-red-500 block uppercase text-black bg-white text-lg font-bold leading-50 px-18 py-1 px-4 focus:text-red-500 w-max mob-w-100 mb-3 tracking-[4.5px]"
@@ -86,7 +84,6 @@ const Header: React.FC<Props> = ({ menus }) => {
                     </div>
                 </div>
             </header>
-
         </>
     )
 }

@@ -1,14 +1,14 @@
 import FormLoader from '@/components/Loaders/FormLoader'
 import { FormData } from '@/types/Type'
 import Link from 'next/link'
-import React from 'react'
+import React, { FormEventHandler } from 'react'
 import { RegisterOptions, UseFormRegisterReturn } from 'react-hook-form'
 import { BiShowAlt } from 'react-icons/bi'
 import { GrFormViewHide } from 'react-icons/gr'
 
 interface Props {
     isSubmitting: boolean;
-    handleSubmit: (data: any) => void;
+    handleSubmit: (data: any) => FormEventHandler<HTMLFormElement>;
     onSubmitHandler: (data: FormData) => Promise<void>;
     register: (name: string, options?: RegisterOptions) => UseFormRegisterReturn;
     errors: any;
@@ -27,7 +27,7 @@ const LoginForm: React.FC<Props> = ({
 }) => {
     return (
         <section>
-            <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+            <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 bg-gray-500">
                 <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
                     <div className={`p-6 space-y-4 md:space-y-6 sm:p-8 ${isSubmitting && 'opacity-65'}`}>
                         <h1 className="text-xl justify-center flex font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
@@ -35,7 +35,7 @@ const LoginForm: React.FC<Props> = ({
                         </h1>
                         <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit(onSubmitHandler)}>
                             <div>
-                                <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">Your email</label>
+                                <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">Your email*</label>
                                 <input
                                     type="email"
                                     id="email"
@@ -52,7 +52,7 @@ const LoginForm: React.FC<Props> = ({
                                 {errors.email && <p className="text-red-500 text-sm mx-1">{errors.email.message}</p>}
                             </div>
                             <div className="relative">
-                                <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">Your Password</label>
+                                <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">Your Password*</label>
                                 <div className="relative flex items-center">
                                     <input
                                         type={showPassword ? 'text' : 'password'}

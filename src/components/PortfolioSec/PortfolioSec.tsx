@@ -9,19 +9,20 @@ const PortfolioSec = () => {
             <div className="mt-[480px] relative z-50">
                 <div className="container">
                     <div className="row">
-                        <div className=""></div>
+                        <div className="span12"></div>
                     </div>
-                    <div className="">
-                        <div className="">
+                    <div className="row">
+                        <div className="span3"></div>
+                        <div className="span9">
                             <div className="row">
-                                <section id="projects" className="">
+                                <section id="projects" >
                                     <ul id="">
-                                        <li className="mob-card-flex"></li>
+                                        <li className="mob-card-flex span3"></li>
                                     </ul>
                                     <div>
                                         <li
                                             dir="rtl"
-                                            className="mob-card-flex flex design isotope-item grid-items category-a satz-transform"
+                                            className="span6 mob-card-flex flex design isotope-item grid-items category-a satz-transform"
                                         >
                                             <a
                                                 className="hover-wrap fancybox"
@@ -63,7 +64,7 @@ const PortfolioSec = () => {
                                             </div>
                                         </li>
                                         <div dir="rtl" className="flex mob-d-block me-0">
-                                            <li className="mob-card-flex ms-5 mob-mr-0 grid-items category-a logo-desin-transform"
+                                            <li className="mob-card-flex span4 ms-5 mob-mr-0 grid-items category-a logo-desin-transform"
                                             >
                                                 <a
                                                     className="hover-wrap fancybox"
@@ -150,7 +151,7 @@ const PortfolioSec = () => {
                                         </div>
                                         <li
                                             dir="rtl"
-                                            className="mob-card-flex item- span4 design flex justify-center ms-0  grid-items category-a corporate-transform"
+                                            className="mob-card-flex item- span4 design flex justify-center ms-0  grid-items category-a corporate-transform lg:ml-48"
                                         >
                                             <a
                                                 className="hover-wrap fancybox"
@@ -727,7 +728,7 @@ const PortfolioSec = () => {
                                                 </a>
 
                                                 <div
-                                                // onClick={() => onImageClick(images[16])}
+                                                    // onClick={() => onImageClick(images[16])}
                                                     className="mb-16 group  mob-h-auto mob-w-auto relative w-[370px] h-[260px]"
                                                 >
                                                     <img
@@ -760,7 +761,7 @@ const PortfolioSec = () => {
                                         </div>
                                     </div>
                                 </section>
-                                <Contact/>
+                                <Contact />
                             </div>
                         </div>
                     </div>

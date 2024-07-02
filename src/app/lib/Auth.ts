@@ -1,10 +1,10 @@
 export const isAuthenticated = async () => {
     try {
-        const token = window.localStorage.getItem('atelier-dart-userToken');
-        if (!token) {
+        const res = JSON.parse(window.localStorage.getItem('atelier-dart-userToken') as string);
+        if (!res?.token) {
             return null;
         }
-        const response = await fetch(`/api/user/role?token=${token}`);
+        const response = await fetch(`/api/user/role?token=${res.token}`);
         const data = await response.json();
         if (!response.ok) {
             // if user not available in db but token is store in localStorage

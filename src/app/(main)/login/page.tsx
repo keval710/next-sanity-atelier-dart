@@ -1,19 +1,20 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { loginUser } from './action';
 import { useRouter } from 'next/navigation';
-import { isAuthenticated } from '@/app/lib/Auth';
 import LoginForm from '@/components/Form/Login/LoginForm';
 import { FormData } from '@/types/Type';
+import { UserContext } from '@/context/UserContext';
 
 const Login = () => {
+    const { setIsUserLogin } = useContext(UserContext);
     const router = useRouter();
+    const { userData } = useContext(UserContext);
     useEffect(() => {
         (async () => {
-            const res = await isAuthenticated();
-            if (res) {
+            if (userData?.token) {
                 router.push('/');
             }
         })();
@@ -49,9 +50,13 @@ const Login = () => {
                     console.error('Login error:', result.error.message);
                 }
             } else {
-                if (result.token) {
-                    window.localStorage.setItem('atelier-dart-userToken', result.token);
+                if (result.token && result.user) {
+                    window.localStorage.setItem('atelier-dart-userToken', JSON.stringify({
+                        token: result.token,
+                        user: result.user
+                    }));
                     router.push('/');
+                    setIsUserLogin(true);
                     reset();
                 }
             }

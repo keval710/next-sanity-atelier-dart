@@ -43,6 +43,9 @@ export const userLoginService = async (req: NextRequest) => {
         // Successful login response
         return {
             message: 'User login successful',
+            user: {
+                userName: isEmailExist.name
+            },
             token: tokenResult
         };
     } catch (error: any) {

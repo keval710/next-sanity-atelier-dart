@@ -1,4 +1,3 @@
 export * from './create/userRegistrationService';
 export * from './validation/validation'
-
-export * from './emailVerification/EmailVerification'
+export * from './emailVerification/emailVerification'

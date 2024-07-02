@@ -1,20 +1,20 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { regUser } from './action';
-import { isAuthenticated } from '@/app/lib/Auth';
 import { useRouter } from 'next/navigation';
 import { FormData } from '@/types/Type';
 import RegForm from '@/components/Form/Reg/RegForm';
 import toast from 'react-hot-toast';
+import { UserContext } from '@/context/UserContext';
 
 const Reg = () => {
     const router = useRouter();
+    const { userData } = useContext(UserContext);
     useEffect(() => {
         (async () => {
-            const res = await isAuthenticated();
-            if (res) {
+            if (userData?.token) {
                 router.push('/');
             }
         })()

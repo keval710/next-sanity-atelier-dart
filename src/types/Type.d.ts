@@ -1,8 +1,8 @@
-interface Images {
+export interface Images {
     altText: string,
     _key: string,
     _type: string,
-    assets: {
+    asset: {
         _ref: string,
         _type: string
     }
@@ -23,13 +23,8 @@ export interface Menus {
     _key: string
 }
 export interface Menu {
-    title: string,
     menu: Menus[],
-    _createdAt: string,
-    _id: string,
-    _rev: string,
-    _type: string,
-    _updatedAt: string
+    title: string,
 }
 
 interface skillCards {
