@@ -10,13 +10,19 @@ interface Context {
     menus: Menus[];
     skillCards: SkillCard[];
     currentImageUrl: string;
+    images: {
+        src: string,
+        thumb: string,
+        caption: string
+    }[]
 }
 
 export const SanityContext = createContext<Context>({
     bacImages: [],
     menus: [],
     skillCards: [],
-    currentImageUrl: ''
+    currentImageUrl: '',
+    images: []
 });
 
 export const SanityProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
@@ -25,6 +31,113 @@ export const SanityProvider: React.FC<React.PropsWithChildren> = ({ children }) 
     const [skillCards, setSkillCards] = useState<SkillCard[]>([]);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+    const images = [
+        {
+            src: "/images/fancybox/image1.jpg",
+            thumb: "/images/fancybox/image1.jpg",
+            caption: "Image 1",
+        },
+        {
+            src: "/images/fancybox/image2.jpg",
+            thumb: "/images/fancybox/image2.jpg",
+            caption: "Image 2",
+        },
+        {
+            src: "/images/fancybox/image3.jpg",
+            thumb: "/images/fancybox/image3.jpg",
+            caption: "Image 3",
+        },
+        {
+            src: "/images/fancybox/image4.jpg",
+            thumb: "/images/fancybox/image4.jpg",
+            caption: "Image 4",
+        },
+        {
+            src: "/images/fancybox/image5.jpg",
+            thumb: "/images/fancybox/image5.jpg",
+            caption: "Image 5",
+        },
+        {
+            src: "/images/fancybox/image6.jpg",
+            thumb: "/images/fancybox/image6.jpg",
+            caption: "Image 6",
+        },
+        {
+            src: "/images/fancybox/image7.jpg",
+            thumb: "/images/fancybox/image7.jpg",
+            caption: "Image 7",
+        },
+        {
+            src: "/images/fancybox/image8.jpg",
+            thumb: "/images/fancybox/image8.jpg",
+            caption: "Image 8",
+        },
+        {
+            src: "/images/fancybox/image9.jpg",
+            thumb: "/images/fancybox/image9.jpg",
+            caption: "Image 9",
+        },
+        {
+            src: "/images/fancybox/image10.jpg",
+            thumb: "/images/fancybox/image10.jpg",
+            caption: "Image 10",
+        },
+        {
+            src: "/images/fancybox/image11.jpg",
+            thumb: "/images/fancybox/image11.jpg",
+            caption: "Image 11",
+        },
+        {
+            src: "/images/fancybox/image12.jpg",
+            thumb: "/images/fancybox/image12.jpg",
+            caption: "Image 12",
+        },
+        {
+            src: "/images/fancybox/image13.jpg",
+            thumb: "/images/fancybox/image13.jpg",
+            caption: "Image 13",
+        },
+        {
+            src: "/images/fancybox/image14.jpg",
+            thumb: "/images/fancybox/image14.jpg",
+            caption: "Image 14",
+        },
+        {
+            src: "/images/fancybox/image15.jpg",
+            thumb: "/images/fancybox/image15.jpg",
+            caption: "Image 15",
+        },
+        {
+            src: "/images/fancybox/image1.jpg",
+            thumb: "/images/fancybox/image1.jpg",
+            caption: "Image 1",
+        },
+        {
+            src: "/images/fancybox/image2.jpg",
+            thumb: "/images/fancybox/image2.jpg",
+            caption: "Image 2",
+        },
+        {
+            src: "/images/fancybox/image3.jpg",
+            thumb: "/images/fancybox/image3.jpg",
+            caption: "Image 3",
+        },
+        {
+            src: "/images/fancybox/image4.jpg",
+            thumb: "/images/fancybox/image4.jpg",
+            caption: "Image 4",
+        },
+        {
+            src: "/images/fancybox/image5.jpg",
+            thumb: "/images/fancybox/image5.jpg",
+            caption: "Image 5",
+        },
+        {
+            src: "/images/fancybox/image6.jpg",
+            thumb: "/images/fancybox/image6.jpg",
+            caption: "Image 6",
+        },
+    ];
     useEffect(() => {
         (async () => {
             try {
@@ -58,7 +171,8 @@ export const SanityProvider: React.FC<React.PropsWithChildren> = ({ children }) 
                 bacImages,
                 menus,
                 skillCards,
-                currentImageUrl
+                currentImageUrl,
+                images
             }}>
             {children}
         </SanityContext.Provider>

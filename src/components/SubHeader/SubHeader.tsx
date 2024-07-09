@@ -6,11 +6,11 @@ import React, { useContext } from 'react'
 import { HiOutlineLogout } from "react-icons/hi";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
 
-const HomeSlider = () => {
+const SubHeader = () => {
     const { handleLogout, userData, setShowDropdown, showDropdown, isUserLogin } = useContext(UserContext);
     return (
         <>
-            <div id="home-slider" className="relative overflow-hidden h-full z-[100000]">
+            <div id="home-slider" className="relative overflow-hidden h-[450px] mb-12 z-[100000]">
                 <div></div>
                 <div className="flex justify-between items-center mob-d-block mt-0">
                     <div className="claim mob-mb-1rem mob_logo_section top-8 left-0 bg-white text-end text-black decoration-line-none text-1xl font-bold leading-34 ps-10 pe-10 uppercase px-14.8 py-2 w-[40%] mb-16 mt-0 lg:mt-5 ml-0 z-2 mob-ps-0">
@@ -30,13 +30,13 @@ const HomeSlider = () => {
                                         {userData.role === 'admin' && (
                                             <Link
                                                 href="/studio/admin-portal"
-                                                className="flex items-center w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-100"
+                                                className="flex items-center w-full px-4 py-2 text-left text-gray-700 hover:text-red-600"
                                             >
                                                 <MdOutlineAdminPanelSettings className="mr-2" /> Admin Panel
                                             </Link>
                                         )}
                                         <button
-                                            className="flex items-center w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-100"
+                                            className="flex items-center w-full px-4 py-2 text-left text-gray-700 hover:text-red-600"
                                             onClick={handleLogout}
                                         >
                                             <HiOutlineLogout className="mr-2" />
@@ -66,4 +66,4 @@ const HomeSlider = () => {
     )
 }
 
-export default HomeSlider
+export default SubHeader

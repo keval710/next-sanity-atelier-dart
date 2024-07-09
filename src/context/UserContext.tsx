@@ -5,7 +5,6 @@ import { createContext, Dispatch, SetStateAction, useEffect, useState } from "re
 
 interface Context {
     userData: {
-        token: string;
         userName: string,
         role: string
     } | null;
@@ -32,30 +31,29 @@ export const UserContext = createContext<Context>({
 });
 
 export const UserProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
-    const [userData, setUserData] = useState<{ token: string, userName: string, role: string } | null>(null);
+    const [userData, setUserData] = useState<{ userName: string, role: string } | null>(null);
     const [showDropdown, setShowDropdown] = useState(false);
     const [isUserLogin, setIsUserLogin] = useState(false);
 
     useEffect(() => {
-        (async () => {
+        ; (async () => {
             const res = JSON.parse(window.localStorage.getItem('atelier-dart-userToken') as string);
             const re = await isAuthenticated();
             if (res?.user && re?.role) {
                 setUserData({
-                    token: res.token,
                     userName: res.user.userName,
                     role: re.role
                 });
                 setIsUserLogin(true);
                 setShowDropdown(false);
             }
-        })()
+        })();
     }, [isUserLogin]);
 
     const handleLogout = () => {
         localStorage.removeItem('atelier-dart-userToken');
         setIsUserLogin(false);
-        setUserData(null)
+        setUserData(null);
     }
     return (
         <UserContext.Provider

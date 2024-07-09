@@ -90,7 +90,7 @@ export const emailVerification = (email: string, token: string, name: string) =>
                     <h1>Hello, ${name}!</h1>
                     <p>Thank you for signing up with us. Please confirm your email address by clicking the button below:</p>
                     <a 
-                    href='http://localhost:3000/reg/emailVerification/${token}' 
+                    href='${process.env.NEXT_PUBLIC_BASE_URL}/reg/emailVerification/${token}'
                     class="email-button" 
                     target="_blank" 
                     style="color: white; text-decoration: none;"

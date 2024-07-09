@@ -20,7 +20,7 @@ export default {
                     {
                         name: 'text',
                         title: 'Text',
-                        type: 'text'
+                        type: 'text',
                     },
                     {
                         name: 'position',

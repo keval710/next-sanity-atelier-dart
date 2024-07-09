@@ -8,17 +8,18 @@ import { FormData } from '@/types/Type';
 import RegForm from '@/components/Form/Reg/RegForm';
 import toast from 'react-hot-toast';
 import { UserContext } from '@/context/UserContext';
+import { isAuthenticated } from '@/app/lib/Auth';
 
 const Reg = () => {
     const router = useRouter();
-    const { userData } = useContext(UserContext);
     useEffect(() => {
         (async () => {
-            if (userData?.token) {
+            const res = await isAuthenticated();
+            if (res) {
                 router.push('/');
             }
         })()
-    }, []);
+    }, [router]);
     const [showPassword, setShowPassword] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { register, handleSubmit, formState: { errors }, reset, setError } = useForm();

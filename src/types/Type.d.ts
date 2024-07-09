@@ -30,6 +30,7 @@ export interface Menu {
 interface skillCards {
     position: string,
     text:string,
+    size: number
     textSize: number,
     _key: string,
     digitalContent: {
@@ -39,7 +40,9 @@ interface skillCards {
             _type: string
         }
     },
-    textColor: unknown
+    textColor: {
+        hex: string
+    }
 }
 
 export interface SkillCard {
@@ -56,4 +59,13 @@ export type FormData = {
     email: string;
     password: string;
     name?: string
+}
+
+export interface AuthResType {
+    message: string;
+    role: string;
+    status: number;
+    error: {
+        message: string;
+    }
 }

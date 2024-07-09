@@ -7,18 +7,19 @@ import { useRouter } from 'next/navigation';
 import LoginForm from '@/components/Form/Login/LoginForm';
 import { FormData } from '@/types/Type';
 import { UserContext } from '@/context/UserContext';
+import { isAuthenticated } from '@/app/lib/Auth';
 
 const Login = () => {
     const { setIsUserLogin } = useContext(UserContext);
     const router = useRouter();
-    const { userData } = useContext(UserContext);
     useEffect(() => {
         (async () => {
-            if (userData?.token) {
+            const res = await isAuthenticated();
+            if (res) {
                 router.push('/');
             }
         })();
-    }, []);
+    }, [router]);
     const [showPassword, setShowPassword] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { register, handleSubmit, formState: { errors }, setError, reset } = useForm();

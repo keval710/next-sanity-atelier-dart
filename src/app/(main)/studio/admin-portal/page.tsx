@@ -5,16 +5,17 @@ import config from "../../../../../sanity.config";
 import { useContext, useEffect } from "react";
 import { useRouter } from 'next/navigation';
 import { UserContext } from "@/context/UserContext";
+import { isAuthenticated } from "@/app/lib/Auth";
 
 export default function Studio() {
-    const { userData } = useContext(UserContext);
     const router = useRouter();
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                if (!userData?.token) {
+                const res = await isAuthenticated();
+                if (!res) {
                     router.push('/login');
-                } else if (userData.role !== 'admin') {
+                } else if (res.role !== 'admin') {
                     router.push('/');
                 }
             } catch (error) {
@@ -22,7 +23,7 @@ export default function Studio() {
             }
         };
         checkAuth();
-    }, []);
+    }, [router]);
 
     return <NextStudio config={config} />;
 }
